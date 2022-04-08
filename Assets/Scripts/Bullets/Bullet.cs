@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField]
-    private int _damage;
+    private int _damage = 0;
     [SerializeField]
     private float _life = 1.0f;
 

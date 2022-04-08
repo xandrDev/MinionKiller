@@ -25,7 +25,7 @@ public class ColorChanger : MonoBehaviour
 
     public Color ChangeBoxMaterialColor(GameObject box)
     {
-        var colorIndex = UnityEngine.Random.Range(0, _boxColors.Count);
+        var colorIndex = Random.Range(0, _boxColors.Count);
         var boxColor = _boxColors[colorIndex];
         box.GetComponent<Renderer>().material.color = boxColor;
         return boxColor;

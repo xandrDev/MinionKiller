@@ -7,7 +7,7 @@ public class Pistol : Weapon
     [SerializeField]
     private int startSpeed = 50;
     [SerializeField]
-    private Transform _bulletSpawnerPoint;
+    private Transform _bulletSpawnerPoint = null;
     
     public float shootRate = 0.15F;
     public float reloadTime = 1.0F;

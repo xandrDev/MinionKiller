@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 public class Player : Entity
 {
     [SerializeField]
-    private DataIndicator _dataIndicator;
+    private DataIndicator _dataIndicator = null;
     [SerializeField]
-    private ColorChanger _colorChanger;
+    private ColorChanger _colorChanger = null;
 
     void Awake()
     {

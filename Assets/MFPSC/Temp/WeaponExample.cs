@@ -10,7 +10,7 @@ public class WeaponExample : MonoBehaviour
     public int power = 50;
 
     [SerializeField]
-    private GameObject _bulletSpawner;
+    private GameObject _bulletSpawner = null;
     //[SerializeField]
     //private float _bulletSpeed = 10.0f;
 

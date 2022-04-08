@@ -3,7 +3,7 @@
 public class BoxFactory : GenericFactory<Box>
 {
     [SerializeField]
-    private ColorChanger _colorChanger;
+    private ColorChanger _colorChanger = null;
 
     void Awake()
     {
