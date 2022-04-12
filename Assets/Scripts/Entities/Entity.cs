@@ -1,9 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public abstract class Entity : MonoBehaviour
+
+[RequireComponent(typeof(EntityHealth))]
+public class Entity : MonoBehaviour
 {
-    protected int health;
-    protected int maxHealth = 100;
-    protected int minHealth = 0;
-    public virtual void TakeDamage(int damegeValue) { }
+    protected EntityHealth _entityHealth = null;
+
+    private void Awake()
+    {
+        _entityHealth = GetComponent<EntityHealth>();
+    }
+
+    public Action OnKilled;
+
+    public void TakeDamage(int damageValue)
+    {
+        _entityHealth.Health -= damageValue;
+
+        if (!_entityHealth.IsAlive)
+        {
+            OnKilled?.Invoke();
+            Destroy(gameObject);
+        }
+    }
 }

@@ -23,11 +23,5 @@ public class ColorChanger : MonoBehaviour
         bullet.GetComponent<Renderer>().material.color = _bulletColor;
     }
 
-    public Color ChangeBoxMaterialColor(GameObject box)
-    {
-        var colorIndex = Random.Range(0, _boxColors.Count);
-        var boxColor = _boxColors[colorIndex];
-        box.GetComponent<Renderer>().material.color = boxColor;
-        return boxColor;
-    }
+    
 }

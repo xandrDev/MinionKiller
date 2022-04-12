@@ -5,8 +5,6 @@ public class MinionFactory : GenericFactory<Minion>
     [SerializeField]
     private Player _minionTarget = null;
     [SerializeField]
-    private BoxFactory _boxFactory = null;
-    [SerializeField]
     private PositionGenerator _positionGenerator = null;
     [SerializeField]
     private float _spawnPositionY = 1.15f;
@@ -20,9 +18,6 @@ public class MinionFactory : GenericFactory<Minion>
 
     private void Awake()
     {
-        if (_boxFactory == null)
-            throw new System.Exception("Box Factory is not defined");
-
         if (_positionGenerator == null)
             throw new System.Exception("Position Generator is not defined");
     }
@@ -40,12 +35,6 @@ public class MinionFactory : GenericFactory<Minion>
             _spawnPosition = _positionGenerator.GetRandomPositionOnPlane(_spawnPositionY, _sizeSpawnCollider);
             _newMinion = GetInstance(_spawnPosition);
             _newMinion.SetTarget(_minionTarget);
-            _newMinion.SetParent(this);
         }
-    }
-
-    public void MinionKilled(Vector3 deathPosition)
-    {
-        _boxFactory.CreateBox(new Vector3(deathPosition.x, deathPosition.y + 0.3f, deathPosition.z));
     }
 }

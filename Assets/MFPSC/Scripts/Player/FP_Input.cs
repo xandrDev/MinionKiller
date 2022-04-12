@@ -29,9 +29,9 @@ public class FP_Input : MonoBehaviour
 
     public bool Shoot()
     {
-        //return Input.GetKey(shootKey);
+        return Input.GetKey(shootKey);
 
-        return mobileInputs.shotButton != null ? mobileInputs.shotButton.IsPressed() : false;
+        //return mobileInputs.shotButton != null ? mobileInputs.shotButton.IsPressed() : false;
     }
 
     public bool Reload()

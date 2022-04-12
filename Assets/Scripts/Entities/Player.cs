@@ -7,8 +7,12 @@ public class Player : Entity
     private DataIndicator _dataIndicator = null;
     [SerializeField]
     private ColorChanger _colorChanger = null;
+    [SerializeField]
+    private Weapon _currentWeapon;
 
-    void Awake()
+    private Color _bulletColor;
+
+    void Start()
     {
         if (_dataIndicator == null)
             throw new System.Exception("DataIndicator is not defined");
@@ -17,19 +21,19 @@ public class Player : Entity
             throw new System.Exception("ColorChanger is not defined");
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        health = maxHealth;
-        _dataIndicator.healthDataUpdate(health);
+        OnKilled += ReloadScene;
     }
 
-    public override void TakeDamage(int damageValue)
+    private void OnDisable()
     {
-        health -= damageValue;
-        _dataIndicator.healthDataUpdate(health);
+        OnKilled -= ReloadScene;
+    }
 
-        if (health <= 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,7 +41,8 @@ public class Player : Entity
         var box = other.gameObject.GetComponent<Box>();
         if (box != null)
         {
-            _colorChanger.SetBulltColor(box.Color);
+            _bulletColor = box.Color;
+            _currentWeapon.BullenColor = box.Color;
             _dataIndicator.IncreaseBoxCount(box.Color);
             box.PickUp();
         }

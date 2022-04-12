@@ -44,7 +44,7 @@ public class Pistol : Weapon
     {
         var bulletClone = Instantiate(bulletPrefab, _bulletSpawnerPoint.position, Quaternion.identity);
         bulletClone.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * startSpeed);
-        colorChanger.ChangeBulletMaterialColor(bulletClone);
+        bulletClone.GetComponent<Renderer>().material.color = BullenColor;
     }
 
     private void PlayShootSound()

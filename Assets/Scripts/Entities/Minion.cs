@@ -2,38 +2,42 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(BoxFactory))]
 public class Minion : Entity
 {
     [SerializeField]
     private int _damageValue = 5;
 
-    private MinionFactory _parent;
+    private BoxFactory _boxFactory;
+
     private NavMeshAgent _navMeshAgent;
     private Entity _target;
     private float _attackTimerValue;
     private float _attackStopTimerValue = 1.0f;
     private bool _isAttackTimerStart;
 
-    void Awake()
+    void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         if (_navMeshAgent == null)
             throw new Exception("Can't find NavMeshAgent component");
+
+        _boxFactory = GetComponent<BoxFactory>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        health = maxHealth;
+        OnKilled += MinionKilled;
+    }
+
+    private void OnDisable()
+    {
+        OnKilled -= MinionKilled;
     }
 
     public void SetTarget(Entity target)
     {
         _target = target;
-    }
-
-    public void SetParent(MinionFactory parent)
-    {
-        _parent = parent;
     }
 
     private bool MoveToTarget()
@@ -52,15 +56,9 @@ public class Minion : Entity
         _target.TakeDamage(_damageValue);
     }
 
-    public override void TakeDamage(int damageValue)
+    private void MinionKilled()
     {
-        health -= damageValue;
-
-        if (health <= minHealth)
-        {
-            _parent.MinionKilled(transform.position);
-            Destroy(gameObject);
-        }
+        _boxFactory.CreateBox(new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z));
     }
 
     private void Update()

@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class DataIndicator : MonoBehaviour
 {
+    [SerializeField]
+    private EntityHealth _playerHealth;
+
     public Text HealthTxt;
     public Text RedBoxCountTxt;
     public Text YellowBoxCountTxt;
@@ -15,6 +18,16 @@ public class DataIndicator : MonoBehaviour
         { Color.red, 0 },
         { Color.yellow, 0 }
     };
+
+    private void OnEnable()
+    {
+        _playerHealth.OnHealthChanged += PlayerHealthUpdate;
+    }
+
+    private void OnDisable()
+    {
+        _playerHealth.OnHealthChanged -= PlayerHealthUpdate;
+    }
 
     private void Start()
     {
@@ -34,7 +47,7 @@ public class DataIndicator : MonoBehaviour
         YellowBoxCountTxt.text = string.Format("Yellow box count: {0:0}", colorToCountMap[Color.yellow]);
     }
 
-    public void healthDataUpdate(int health)
+    private void PlayerHealthUpdate(int health)
     {
         HealthTxt.text = string.Format("Health: {0:0}", health);
     }
