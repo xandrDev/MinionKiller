@@ -3,6 +3,7 @@
 public class Box : MonoBehaviour
 {
     public Color Color { get; set; }
+    public ColorName ColorName { get; set; }
 
     private Renderer _renderer;
     private AudioSource _pickUpSource;

@@ -3,24 +3,31 @@ using UnityEngine;
 
 public class BoxFactory : GenericFactory<Box>
 {
-    private List<Color> _boxColors = new List<Color>()
+    private Dictionary<ColorName, Color> _colors = new Dictionary<ColorName, Color>()
     {
-        Color.red,
-        Color.green,
-        Color.yellow
+        { ColorName.green, Color.green },
+        { ColorName.red, Color.red },
+        { ColorName.yellow, Color.yellow },
     };
 
-    public Color ChangeBoxMaterialColor(GameObject box)
+    public ColorName GetRandomName()
     {
-        var colorIndex = Random.Range(0, _boxColors.Count);
-        var boxColor = _boxColors[colorIndex];
-        box.GetComponent<Renderer>().material.color = boxColor;
-        return boxColor;
+        return (ColorName)Random.Range(0, System.Enum.GetValues(typeof(ColorName)).Length);
     }
+
+    //public Color GetRandomColor()
+    //{
+    //    var colorIndex = (ColorName)Random.Range(0, _colors.Count);
+    //    return _colors[colorIndex];
+    //}
 
     public void CreateBox(Vector3 spawnPosition)
     {
         var newBox = GetInstance(spawnPosition);
-        newBox.Color = ChangeBoxMaterialColor(newBox.gameObject);
+        var colorName = GetRandomName();
+
+        newBox.GetComponent<Renderer>().material.color = _colors[colorName];
+        newBox.Color = _colors[colorName];
+        newBox.ColorName = colorName;
     }
 }

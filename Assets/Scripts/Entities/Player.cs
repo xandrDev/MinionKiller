@@ -1,24 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(PlayerScore))]
 public class Player : Entity
 {
     [SerializeField]
-    private DataIndicator _dataIndicator = null;
-    [SerializeField]
-    private ColorChanger _colorChanger = null;
-    [SerializeField]
-    private Weapon _currentWeapon;
+    private Weapon _currentWeapon = null;
 
-    private Color _bulletColor;
+    private PlayerScore _playerScore;
 
     void Start()
     {
-        if (_dataIndicator == null)
-            throw new System.Exception("DataIndicator is not defined");
-
-        if (_colorChanger == null)
-            throw new System.Exception("ColorChanger is not defined");
+        _playerScore = GetComponent<PlayerScore>();
     }
 
     private void OnEnable()
@@ -41,9 +34,8 @@ public class Player : Entity
         var box = other.gameObject.GetComponent<Box>();
         if (box != null)
         {
-            _bulletColor = box.Color;
             _currentWeapon.BullenColor = box.Color;
-            _dataIndicator.IncreaseBoxCount(box.Color);
+            _playerScore.IncreaseBoxCount(box.ColorName);
             box.PickUp();
         }
     }
